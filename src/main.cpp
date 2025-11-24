@@ -346,9 +346,17 @@ void FremShowChoiceMsg(RE::StaticFunctionTag*, std::vector<RE::BSFixedString> te
 	PrismaUI->Focus(view);
 }
 
+void FremShowEnchMenu(RE::StaticFunctionTag*, std::vector<RE::BSFixedString> text)
+{
+    logger::info("FremShowEnchMenu {}", GetString(text));
+    PrismaUI->Invoke(view, ("updateEnchMenuItems('" + GetString(text) + "')").c_str());
+    PrismaUI->Focus(view);
+}
+
 bool FremPapyrusFunctions(RE::BSScript::IVirtualMachine* vm)
 {
     vm->RegisterFunction("FremShowChoiceMsg", "STB_Functions", FremShowChoiceMsg);
+    vm->RegisterFunction("FremShowEnchMenu", "STB_Functions", FremShowEnchMenu);
     return true;
 }
 
@@ -401,8 +409,14 @@ static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
                 logger::info("InputEventHandler successfully initialized");
 
                 });
+
+                PrismaUI->RegisterJSListener(view, "sendEnchMenuDataSKSE", [](const char* data) -> void {
+                    std::string str(data);
+                    logger::info("menu data {}", data);
+                    PrismaUI->Unfocus(view);
+                });
                 
-                PrismaUI->RegisterJSListener(view, "sendMenuDataSKSE", [](const char* data) -> void {
+                PrismaUI->RegisterJSListener(view, "sendSpawnMenuDataSKSE", [](const char* data) -> void {
                     std::string str(data);
                     int comma = str.find(',');
                     int index = std::stoi(str.substr(0, comma));

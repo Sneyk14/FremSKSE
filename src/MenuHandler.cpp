@@ -51,6 +51,9 @@ auto MenuHandler::ProcessEvent(const RE::MenuOpenCloseEvent* event, RE::BSTEvent
 
             // ”правление видимостью виджета подсказок
             //PrismaUI->Invoke(view, ("setHintContainerVisibility(" + std::string(shouldShowWidget && !isLoadingMenu ? "true" : "false") + ")").c_str());
+
+            // ”правление видимостью спавнера мобов
+            //PrismaUI->Invoke(view, ("setSpawnMenuVisibility(" + std::string(shouldShowWidget && !isLoadingMenu ? "false" : "true") + ")").c_str());
         }
     }
     return RE::BSEventNotifyControl::kContinue;
