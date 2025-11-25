@@ -412,6 +412,15 @@ static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
 
                 PrismaUI->RegisterJSListener(view, "sendEnchMenuDataSKSE", [](const char* data) -> void {
                     std::string str(data);
+                    SKSE::ModCallbackEvent Event;
+                    Event.eventName = "ScrollMenuClosed";
+                    Event.strArg = data;
+                    Event.numArg = 0;
+                    Event.sender = nullptr;
+                    auto modCallback = SKSE::GetModCallbackEventSource();
+                    if (modCallback) {
+                        modCallback->SendEvent(&Event);
+                    }
                     logger::info("menu data {}", data);
                     PrismaUI->Unfocus(view);
                 });
