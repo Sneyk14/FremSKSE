@@ -119,6 +119,14 @@ namespace Input {
 
                     HintManager::GetSingleton().onHintClosed();
                 }*/
+                // Enter
+                if (key == 0x1C && button->IsDown()) {
+                    PrismaUI->Invoke(view, "handleEnchMenuConfirm()");
+                }
+                // Esc
+                if (key == 0x01 && button->IsDown()) {
+                    PrismaUI->Invoke(view, "handleEnchMenuCancel()");
+                }
             }
         }
 
