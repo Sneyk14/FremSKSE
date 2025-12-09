@@ -214,7 +214,7 @@ std::string buildCrimeDataScript() {
     std::string script = "updateCrimeWidgets('" + jsonData + "')";
     return script;
 }
-
+TESGlobal* FremCheck;
 class PlayerUpdate
 {
 public:
@@ -249,7 +249,7 @@ private:
         }*/
 
         // полоски навыков
-        if (timeUpdateSkills >= 3 && !(player->IsInCombat())) {
+        if (timeUpdateSkills >= 3 && !(player->IsInCombat()) && FremCheck->value == 0) {
             timeUpdateSkills = 0;
             ProcessSkillsUpdate(player);
         }
@@ -377,6 +377,7 @@ static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
 
         SKSE::GetPapyrusInterface()->Register(FremPapyrusFunctions);
 
+		FremCheck = TESForm::LookupByEditorID<TESGlobal>("aaMZgv_FremHelp");
 	    Falkreath = TESForm::LookupByID<TESFaction>(0x28170);
         Pale = TESForm::LookupByID<TESFaction>(0x2816E);
 	    Winterhold = TESForm::LookupByID<TESFaction>(0x2816F);
